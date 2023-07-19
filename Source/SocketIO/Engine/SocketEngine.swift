@@ -742,11 +742,11 @@ extension SocketEngine {
     /// - Parameters:
     ///   - event: WS Event
     ///   - _:
-    public func didReceive(event: WebSocketEvent, _: WebSocketClient) {
+    public func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case let .connected(headers):
             wsConnected = true
-            client?.engineDidWebsocketUpgrade(headers: headers)
+            self.client?.engineDidWebsocketUpgrade(headers: headers)
             websocketDidConnect()
         case .cancelled:
             wsConnected = false
