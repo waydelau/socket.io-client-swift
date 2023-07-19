@@ -742,7 +742,7 @@ extension SocketEngine {
     /// - Parameters:
     ///   - event: WS Event
     ///   - _:
-    public func didReceive(event: WebSocketEvent, client _: WebSocket) {
+    public func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case let .connected(headers):
             wsConnected = true
@@ -758,6 +758,9 @@ extension SocketEngine {
             parseEngineMessage(msg)
         case let .binary(data):
             parseEngineData(data)
+        case .peerClosed:
+            wsConnected = false
+            websocketDidDisconnect(error: nil)
         case _:
             break
         }
